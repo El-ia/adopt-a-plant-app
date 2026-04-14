@@ -1,0 +1,57 @@
+<div class="min-h-screen p-8">
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-extrabold text-gray-700 mb-2">🌿 Pixel Plant Garden 🌿</h1>
+    <p class="text-gray-400 text-sm mb-4">✿ Un endroit cosy où les petites plantes trouvent leur foyer ✿</p>
+    
+    <!-- Adopted counter -->
+    <ng-container *ngIf="plants$ | async as plants">
+      <span class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm font-semibold">
+        🌱 {{ countAdopted(plants) }}/{{ plants.length }} adoptées
+      </span>
+    </ng-container>
+  </div>
+
+  <!-- Filters -->
+  <div class="flex justify-center gap-3 mb-8">
+    <button
+      (click)="setFilter('all')"
+      class="px-5 py-2 rounded-full font-semibold text-sm transition-colors duration-200"
+      [ngClass]="filter() === 'all' ? 'bg-green-500 text-white' : 'bg-white text-gray-500 hover:bg-gray-100'">
+      🌿 Toutes
+    </button>
+    <button
+      (click)="setFilter('available')"
+      class="px-5 py-2 rounded-full font-semibold text-sm transition-colors duration-200"
+      [ngClass]="filter() === 'available' ? 'bg-green-500 text-white' : 'bg-white text-gray-500 hover:bg-gray-100'">
+      🌱 Disponibles
+    </button>
+    <button
+      (click)="setFilter('adopted')"
+      class="px-5 py-2 rounded-full font-semibold text-sm transition-colors duration-200"
+      [ngClass]="filter() === 'adopted' ? 'bg-green-500 text-white' : 'bg-white text-gray-500 hover:bg-gray-100'">
+      💚 Adoptées
+    </button>
+  </div>
+
+  <!-- Plants grid -->
+  <ng-container *ngIf="plants$ | async as plants">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+      <app-plant-card
+        *ngFor="let plant of filterPlants(plants)"
+        [plant]="plant"
+        (selected)="selectPlant($event)">
+      </app-plant-card>
+    </div>
+  </ng-container>
+
+  <!-- Modal -->
+  <app-plant-detail
+    *ngIf="selectedPlant()"
+    [plant]="selectedPlant()!"
+    (closed)="closeDetail()"
+    (toggled)="toggleAdopt($event)">
+  </app-plant-detail>
+
+</div>
