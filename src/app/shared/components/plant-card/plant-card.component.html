@@ -1,0 +1,33 @@
+<div
+  (click)="onSelect()"
+  class="relative bg-white rounded-3xl p-4 shadow-sm cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-md"
+  [class.ring-2]="plant.adopted"
+  [class.ring-green-300]="plant.adopted"
+>
+  <!-- Adopted badge -->
+  <div *ngIf="plant.adopted" class="absolute top-3 right-3 text-lg">💚</div>
+
+  <!-- Plant image -->
+  <div class="flex justify-center mb-3">
+    <img [src]="plant.imageUrl" [alt]="plant.name" class="w-24 h-24 object-contain" />
+  </div>
+
+  <!-- Plant name -->
+  <h3 class="text-center font-bold text-gray-700 text-lg">{{ plant.name }}</h3>
+
+  <!-- Description -->
+  <p class="text-center text-gray-400 text-sm mt-1 line-clamp-2">{{ plant.description }}</p>
+
+  <!-- Rarity badge -->
+  <div class="flex justify-center mt-3">
+    <span class="px-3 py-1 rounded-full text-xs font-semibold"
+      [ngClass]="{
+        'bg-gray-100 text-gray-500': plant.rarity === 'common',
+        'bg-yellow-100 text-yellow-600': plant.rarity === 'uncommon',
+        'bg-pink-100 text-pink-500': plant.rarity === 'rare',
+        'bg-purple-100 text-purple-600': plant.rarity === 'legendary'
+      }">
+      {{ plant.rarity }}
+    </span>
+  </div>
+</div>
