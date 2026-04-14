@@ -7,9 +7,13 @@
   <!-- Adopted badge -->
   <div *ngIf="plant.adopted" class="absolute top-3 right-3 text-lg">💚</div>
 
-  <!-- Plant image -->
-  <div class="flex justify-center mb-3">
-    <img [src]="plant.imageUrl" [alt]="plant.name" class="w-24 h-24 object-contain" />
+  <!-- Animated plant image (switches between frame 1 and frame 2) -->
+  <div class="flex justify-center mb-3 h-28">
+    <img
+      [src]="currentImageUrl"
+      [alt]="plant.name"
+      class="w-24 h-24 object-contain transition-opacity duration-150"
+    />
   </div>
 
   <!-- Plant name -->
