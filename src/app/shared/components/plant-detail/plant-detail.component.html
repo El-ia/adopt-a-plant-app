@@ -1,5 +1,5 @@
-<!-- Overlay -->
-<div class="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4" (click)="onClose()">
+<!-- Overlay with blur -->
+<div class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4" (click)="onClose()">
   
   <!-- Modal -->
   <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-xl relative" (click)="$event.stopPropagation()">
@@ -15,16 +15,22 @@
     <!-- Name -->
     <h2 class="text-center font-bold text-gray-700 text-2xl mb-1">{{ plant.name }}</h2>
 
-    <!-- Rarity -->
-    <div class="flex justify-center mb-4">
+    <!-- Rarity with stars -->
+    <div class="flex flex-col items-center gap-1 mb-4">
+      <span>
+        <span *ngIf="plant.rarity === 'Commun'">⭐</span>
+        <span *ngIf="plant.rarity === 'Peu commun'">⭐⭐</span>
+        <span *ngIf="plant.rarity === 'Rare'">⭐⭐⭐</span>
+        <span *ngIf="plant.rarity === 'Légendaire'">⭐⭐⭐⭐⭐</span>
+      </span>
       <span class="px-3 py-1 rounded-full text-xs font-semibold"
         [ngClass]="{
-          'bg-gray-100 text-gray-500': plant.rarity === 'common',
-          'bg-yellow-100 text-yellow-600': plant.rarity === 'uncommon',
-          'bg-pink-100 text-pink-500': plant.rarity === 'rare',
-          'bg-purple-100 text-purple-600': plant.rarity === 'legendary'
+          'bg-gray-100 text-gray-500': plant.rarity === 'Commun',
+          'bg-yellow-100 text-yellow-600': plant.rarity === 'Peu commun',
+          'bg-pink-100 text-pink-500': plant.rarity === 'Rare',
+          'bg-purple-100 text-purple-600': plant.rarity === 'Légendaire'
         }">
-        ⭐ {{ plant.rarity }}
+        {{ plant.rarity }}
       </span>
     </div>
 
@@ -32,11 +38,19 @@
     <p class="text-center text-gray-500 text-sm mb-4">{{ plant.description }}</p>
 
     <!-- Mood -->
-    <div class="flex justify-center mb-6">
-      <span class="bg-yellow-50 text-yellow-600 px-4 py-1 rounded-full text-sm font-medium">
-        Humeur : {{ plant.mood }} 😊
+    <div class="flex justify-center mb-3">
+      <span class="bg-green-50 text-green-600 px-4 py-1 rounded-full text-sm font-medium">
+        Humeur : {{ plant.mood }}
       </span>
     </div>
+
+    <!-- Adoption date -->
+    <div *ngIf="plant.adopted && plant.adoptedAt" class="flex justify-center mb-6">
+      <span class="text-green-500 text-sm font-medium">
+        💚 Adoptée le {{ plant.adoptedAt | date:'dd/MM/yyyy' }}
+      </span>
+    </div>
+    <div *ngIf="!plant.adopted" class="mb-6"></div>
 
     <!-- Adopt button -->
     <button

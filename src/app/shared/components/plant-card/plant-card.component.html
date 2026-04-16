@@ -1,18 +1,17 @@
 <div
   (click)="onSelect()"
-  class="relative bg-white rounded-3xl p-4 shadow-sm cursor-pointer transition-transform duration-200 hover:scale-105 hover:shadow-md"
-  [class.ring-2]="plant.adopted"
-  [class.ring-green-300]="plant.adopted"
+  class="relative bg-white rounded-3xl p-4 cursor-pointer transition-all duration-200 border-2 border-gray-100 hover:-translate-y-1 hover:border-green-300 hover:shadow-[0_8px_24px_rgba(134,239,172,0.5)]"
+  [ngClass]="plant.adopted ? 'border-green-400 shadow-[0_8px_24px_rgba(134,239,172,0.4)]' : 'border-gray-100'"
 >
   <!-- Adopted badge -->
   <div *ngIf="plant.adopted" class="absolute top-3 right-3 text-lg">💚</div>
 
-  <!-- Animated plant image (switches between frame 1 and frame 2) -->
+  <!-- Plant image -->
   <div class="flex justify-center mb-3 h-28">
     <img
-      [src]="currentImageUrl"
+      [src]="plant.imageUrl"
       [alt]="plant.name"
-      class="w-24 h-24 object-contain transition-opacity duration-150"
+      class="w-24 h-24 object-contain plant-float"
     />
   </div>
 
@@ -26,10 +25,10 @@
   <div class="flex justify-center mt-3">
     <span class="px-3 py-1 rounded-full text-xs font-semibold"
       [ngClass]="{
-        'bg-gray-100 text-gray-500': plant.rarity === 'common',
-        'bg-yellow-100 text-yellow-600': plant.rarity === 'uncommon',
-        'bg-pink-100 text-pink-500': plant.rarity === 'rare',
-        'bg-purple-100 text-purple-600': plant.rarity === 'legendary'
+        'bg-gray-100 text-gray-500': plant.rarity === 'Commun',
+        'bg-yellow-100 text-yellow-600': plant.rarity === 'Peu commun',
+        'bg-pink-100 text-pink-500': plant.rarity === 'Rare',
+        'bg-purple-100 text-purple-600': plant.rarity === 'Légendaire'
       }">
       {{ plant.rarity }}
     </span>
