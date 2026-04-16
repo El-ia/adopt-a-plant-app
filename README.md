@@ -1,59 +1,78 @@
-# AdoptAPantApp
+# 🌿 Pixel Plant Garden
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+A kawaii pixel art plant adoption app built with Angular and Firebase.
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+- Browse a collection of 8 unique kawaii plants
+- Filter plants by status: All / Available / Adopted
+- Click on a plant to see its details (rarity, mood, adoption date)
+- Adopt or release a plant via a Firebase Cloud Function
+- Real-time updates with Firestore
+- Responsive design (mobile, tablet, desktop)
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Angular 21 (standalone components, signals)
+- **Backend**: Firebase Firestore + Cloud Functions
+- **Styling**: Tailwind CSS
+- **Hosting**: Firebase Hosting
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js v20+
+- Angular CLI
+- Firebase CLI
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development server
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open `http://localhost:4200/`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### Deploy
 
 ```bash
-ng test
+firebase deploy
 ```
 
-## Running end-to-end tests
+## 🗂️ Project Structure
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```src/app/
+core/
+models/         # Plant interface
+services/       # PlantService (Firestore + Cloud Functions)
+features/
+home/           # Main page component
+shared/
+components/
+plant-card/   # Plant card with animation
+plant-detail/ # Plant detail modal
+functions/
+src/
+index.ts        # adoptPlant Cloud Function
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 💡 Technical Choices
 
-## Additional Resources
+- **Direct Firestore reads** for real-time plant list updates
+- **Cloud Function** for adoption logic — keeps business logic server-side
+- **Angular Signals** for local state management (filter, selected plant)
+- **Single page** — no routing needed for this scope
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
