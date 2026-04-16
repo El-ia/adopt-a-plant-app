@@ -1,5 +1,5 @@
-import { Component, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { PlantService } from '../../core/services/plant.service';
 import { PlantCardComponent } from '../../shared/components/plant-card/plant-card.component';
 import { PlantDetailComponent } from '../../shared/components/plant-detail/plant-detail.component';
@@ -37,7 +37,6 @@ export class HomeComponent {
     this.selectedPlant.set(null);
   }
 
-  // Filter plants based on active filter
   filterPlants(plants: Plant[]): Plant[] {
     const f = this.filter();
     if (f === 'available') return plants.filter(p => !p.adopted);
@@ -45,13 +44,18 @@ export class HomeComponent {
     return plants;
   }
 
-  // Adopt or unadopt a plant via Cloud Function
+  // Adopt or unadopt via Cloud Function — refresh modal with updated plant
   async toggleAdopt(plant: Plant) {
     await this.plantService.adoptPlant(plant.id);
-    this.closeDetail();
+    const sub = this.plants$.subscribe(plants => {
+      const updated = plants.find(p => p.id === plant.id);
+      if (updated) {
+        this.selectedPlant.set(updated);
+        sub.unsubscribe();
+      }
+    });
   }
 
-  // Count adopted plants
   countAdopted(plants: Plant[]): number {
     return plants.filter(p => p.adopted).length;
   }

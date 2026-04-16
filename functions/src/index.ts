@@ -1,14 +1,17 @@
-import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { onRequest } from 'firebase-functions/v2/https';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 initializeApp();
 
-export const adoptPlant = onCall(async (request) => {
-  const { plantId } = request.data;
+export const adoptPlant = onRequest({
+  cors: true,
+}, async (req, res) => {
+  const { plantId } = req.body.data;
 
   if (!plantId) {
-    throw new HttpsError('invalid-argument', 'plantId is required');
+    res.status(400).json({ error: 'plantId is required' });
+    return;
   }
 
   const db = getFirestore();
@@ -16,7 +19,8 @@ export const adoptPlant = onCall(async (request) => {
   const plant = await plantRef.get();
 
   if (!plant.exists) {
-    throw new HttpsError('not-found', 'Plant not found');
+    res.status(404).json({ error: 'Plant not found' });
+    return;
   }
 
   const currentAdopted = plant.data()?.adopted ?? false;
@@ -26,5 +30,5 @@ export const adoptPlant = onCall(async (request) => {
     adoptedAt: currentAdopted ? null : new Date(),
   });
 
-  return { success: true, adopted: !currentAdopted };
+  res.json({ data: { success: true, adopted: !currentAdopted } });
 });

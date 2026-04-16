@@ -44,20 +44,20 @@
       </span>
     </div>
 
-    <!-- Adoption date -->
-    <div *ngIf="plant.adopted && plant.adoptedAt" class="flex justify-center mb-6">
-      <span class="text-green-500 text-sm font-medium">
-        💚 Adoptée le {{ plant.adoptedAt | date:'dd/MM/yyyy' }}
+    <!-- Adoption date — only shown when adopted -->
+    <div class="flex justify-center mb-6" style="min-height: 24px;">
+      <span *ngIf="plant.adopted && getAdoptedDate()" class="text-green-500 text-sm font-medium">
+        Adoptée le {{ getAdoptedDate() | date:'dd/MM/yyyy' }}
       </span>
     </div>
     <div *ngIf="!plant.adopted" class="mb-6"></div>
 
-    <!-- Adopt button -->
+    <!-- Adopt / Release button — updates based on adopted state -->
     <button
       (click)="onToggle()"
-      class="w-full py-3 rounded-2xl font-bold text-white transition-colors duration-200"
-      [ngClass]="plant.adopted ? 'bg-red-400 hover:bg-red-500' : 'bg-green-500 hover:bg-green-600'">
-      {{ plant.adopted ? 'Retirer du jardin' : 'Adopter cette plante ✨' }}
+      class="w-full py-3 rounded-2xl font-bold text-white transition-all duration-300"
+      [ngClass]="plant.adopted ? 'bg-red-400 hover:bg-red-500' : 'bg-green-400 hover:bg-green-500'">
+      {{ plant.adopted ? '💔 Retirer du jardin' : '💚 Adopter cette plante' }}
     </button>
 
   </div>
