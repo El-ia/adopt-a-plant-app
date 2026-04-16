@@ -1,4 +1,4 @@
-# 🌿 Pixel Plant Garden
+# 🌿 Adopt A Plant
 
 A kawaii pixel art plant adoption app built with Angular and Firebase.
 
