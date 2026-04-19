@@ -1,23 +1,27 @@
-<div
+<article
   (click)="onSelect()"
   class="relative bg-white rounded-3xl p-4 cursor-pointer transition-all duration-200 border-2 border-gray-100 hover:-translate-y-1 hover:border-green-500 hover:shadow-[0_8px_24px_rgba(34,197,94,0.3)]"
+  [attr.aria-label]="'Voir le détail de ' + plant.name"
 >
-  <!-- Adopted badge — petit pins cœur en haut à droite -->
-  <div *ngIf="plant.adopted" class="absolute -top-2 -right-2 bg-pink-400 rounded-full w-8 h-8 flex items-center justify-center shadow-md">
-    <span class="text-white text-xs">♥</span>
+  <!-- Adopted badge -->
+  <div
+    *ngIf="plant.adopted"
+    class="absolute -top-2 -right-2 bg-pink-400 rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+    aria-label="Plante adoptée">
+    <span class="text-white text-xs" aria-hidden="true">♥</span>
   </div>
 
   <!-- Plant image -->
-  <div class="flex justify-center mb-3 h-28">
+  <figure class="flex justify-center mb-3 h-28">
     <img
       [src]="plant.imageUrl"
       [alt]="plant.name"
       class="w-24 h-24 object-contain plant-float"
     />
-  </div>
+  </figure>
 
   <!-- Plant name -->
-  <h3 class="text-center font-bold text-gray-700 text-lg">{{ plant.name }}</h3>
+  <h2 class="pixel text-center font-bold text-gray-700 text-lg">{{ plant.name }}</h2>
 
   <!-- Description -->
   <p class="text-center text-gray-400 text-sm mt-1 line-clamp-2">{{ plant.description }}</p>
@@ -34,4 +38,5 @@
       {{ plant.rarity }}
     </span>
   </div>
-</div>
+
+</article>

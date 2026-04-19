@@ -1,27 +1,43 @@
 <!-- Overlay with blur -->
-<div class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4" (click)="onClose()">
-  
+<div
+  class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+  (click)="onClose()"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="'Détail de ' + plant.name"
+>
   <!-- Modal -->
-  <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-xl relative" (click)="$event.stopPropagation()">
-    
+  <div
+    class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-xl relative"
+    (click)="$event.stopPropagation()"
+  >
     <!-- Close button -->
-    <button (click)="onClose()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">✕</button>
+    <button
+      (click)="onClose()"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl"
+      aria-label="Fermer">
+      ✕
+    </button>
 
     <!-- Image -->
-    <div class="flex justify-center mb-4">
-      <img [src]="plant.imageUrl" [alt]="plant.name" class="w-36 h-36 object-contain plant-float" />
-    </div>
+    <figure class="flex justify-center mb-4">
+      <img
+        [src]="plant.imageUrl"
+        [alt]="plant.name"
+        class="w-36 h-36 object-contain plant-float"
+      />
+    </figure>
 
     <!-- Name -->
-    <h2 class="text-center font-bold text-gray-700 text-2xl mb-1">{{ plant.name }}</h2>
+    <h2 class="pixel text-center font-bold text-gray-700 text-2xl mb-1">{{ plant.name }}</h2>
 
     <!-- Rarity with stars -->
     <div class="flex flex-col items-center gap-1 mb-4">
-      <span>
-        <span *ngIf="plant.rarity === 'Commun'">⭐</span>
-        <span *ngIf="plant.rarity === 'Peu commun'">⭐⭐</span>
-        <span *ngIf="plant.rarity === 'Rare'">⭐⭐⭐</span>
-        <span *ngIf="plant.rarity === 'Légendaire'">⭐⭐⭐⭐⭐</span>
+      <span aria-label="Rareté : {{ plant.rarity }}">
+        <span *ngIf="plant.rarity === 'Commun'" aria-hidden="true">⭐</span>
+        <span *ngIf="plant.rarity === 'Peu commun'" aria-hidden="true">⭐⭐</span>
+        <span *ngIf="plant.rarity === 'Rare'" aria-hidden="true">⭐⭐⭐</span>
+        <span *ngIf="plant.rarity === 'Légendaire'" aria-hidden="true">⭐⭐⭐⭐⭐</span>
       </span>
       <span class="px-3 py-1 rounded-full text-xs font-semibold"
         [ngClass]="{
@@ -44,19 +60,21 @@
       </span>
     </div>
 
-    <!-- Adoption date — only shown when adopted -->
+    <!-- Adoption date -->
     <div class="flex justify-center mb-6" style="min-height: 24px;">
-      <span *ngIf="plant.adopted && getAdoptedDate()" class="text-green-500 text-sm font-medium">
+      <span
+        *ngIf="plant.adopted && getAdoptedDate()"
+        class="text-green-500 text-sm font-medium">
         Adoptée le {{ getAdoptedDate() | date:'dd/MM/yyyy' }}
       </span>
     </div>
-    <div *ngIf="!plant.adopted" class="mb-6"></div>
 
-    <!-- Adopt / Release button — updates based on adopted state -->
+    <!-- Adopt / Release button -->
     <button
       (click)="onToggle()"
       class="w-full py-3 rounded-2xl font-bold text-white transition-all duration-300"
-      [ngClass]="plant.adopted ? 'bg-red-400 hover:bg-red-500' : 'bg-green-400 hover:bg-green-500'">
+      [ngClass]="plant.adopted ? 'bg-red-400 hover:bg-red-500' : 'bg-green-400 hover:bg-green-500'"
+      [attr.aria-label]="plant.adopted ? 'Retirer ' + plant.name + ' du jardin' : 'Adopter ' + plant.name">
       {{ plant.adopted ? '💔 Retirer du jardin' : '💚 Adopter cette plante' }}
     </button>
 

@@ -9,9 +9,13 @@ import { Plant } from '../../../core/models/plant.model';
   templateUrl: './plant-card.component.html'
 })
 export class PlantCardComponent {
+  // Plant data received from HomeComponent
   @Input() plant!: Plant;
+
+  // Communication channel to send the clicked plant back to HomeComponent
   @Output() selected = new EventEmitter<Plant>();
 
+  // Triggered on card click — sends this plant to HomeComponent to open the modal
   onSelect() {
     this.selected.emit(this.plant);
   }
